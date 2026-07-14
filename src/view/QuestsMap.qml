@@ -1,5 +1,6 @@
 import QtQuick
+import "theme.js" as Theme
 
-Item {
-
+Rectangle {
+    color: Theme.appElement
 }
