@@ -17,10 +17,20 @@ qt_add_qml_module(appTaintedGrail-QuestsTracker
     VERSION 1.0
     QML_FILES
         src/view/Main.qml
-        QML_FILES src/view/QuestsTracker.qml
-        QML_FILES src/view/QuestsMap.qml
-        QML_FILES src/view/element/TGText.qml
-        QML_FILES src/view/theme.js
+        QML_FILES
+            src/view/QuestsTracker.qml
+            src/view/QuestsMap.qml
+            src/view/element/TGText.qml
+            src/view/theme.js
+        SOURCES
+            src/model/questmodel.h src/model/questmodel.cpp
+            src/model/quest.h
+)
+
+target_include_directories(appTaintedGrail-QuestsTracker
+    PRIVATE
+        src
+        src/model
 )
 
 set_target_properties(appTaintedGrail-QuestsTracker PROPERTIES
