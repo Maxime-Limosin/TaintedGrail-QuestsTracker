@@ -9,14 +9,14 @@ find_package(Qt6 REQUIRED COMPONENTS Quick)
 qt_standard_project_setup(REQUIRES 6.8)
 
 qt_add_executable(appTaintedGrail-QuestsTracker
-    main.cpp
+    src/main.cpp
 )
 
 qt_add_qml_module(appTaintedGrail-QuestsTracker
     URI TaintedGrail-QuestsTracker
     VERSION 1.0
     QML_FILES
-        Main.qml
+        src/view/Main.qml
 )
 
 set_target_properties(appTaintedGrail-QuestsTracker PROPERTIES
