@@ -17,6 +17,8 @@ qt_add_qml_module(appTaintedGrail-QuestsTracker
     VERSION 1.0
     QML_FILES
         src/view/Main.qml
+        QML_FILES src/view/QuestsTracker.qml
+        QML_FILES src/view/QuestsMap.qml
 )
 
 set_target_properties(appTaintedGrail-QuestsTracker PROPERTIES

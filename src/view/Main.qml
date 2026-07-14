@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 
 Window {
     width: 640
@@ -6,15 +7,16 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
-    Rectangle {
-        height: 200
-        width: 200
-        color: "red"
-        anchors.centerIn: parent
+    ColumnLayout {
+        anchors.fill: parent
 
-        Text {
-            text: "This is a test"
-            anchors.centerIn: parent
+        QuestsTracker {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+        }
+
+        QuestsMap {
+            Layout.fillWidth: true
         }
     }
 }
