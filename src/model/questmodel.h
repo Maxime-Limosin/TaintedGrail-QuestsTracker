@@ -18,7 +18,9 @@ public:
         IdRole = Qt::UserRole + 1,
         TitleRole,
         DescriptionRole,
-        CompletedRole
+        FinishedRole,
+        ColorRole,
+        SubTasksRole
     };
 
     explicit QuestModel(QObject *parent = nullptr);
@@ -29,7 +31,8 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     QHash<int, QByteArray> roleNames() const override;
 
-    Q_INVOKABLE void addQuest(const QString &title, const QString &description);
+    Q_INVOKABLE void addQuest(const QString &title, const QString &description, QColor color = Qt::white);
+    Q_INVOKABLE bool addSubTask(quint16 questId, const QString &taskDesc);
     Q_INVOKABLE bool toggleCompleted(int row);
 
 private:

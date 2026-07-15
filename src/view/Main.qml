@@ -4,11 +4,11 @@ import QtQuick.Layouts
 import "theme.js" as Theme
 
 Window {
-    width: 640
-    height: 480
+    width: 600
+    height: 1200
     visible: true
 
-    title: qsTr("Hello World")
+    title: "Tainted Grail - Quests Tracker"
     color: Theme.appBackground
 
     ColumnLayout {
@@ -22,7 +22,7 @@ Window {
 
         QuestsMap {
             Layout.fillWidth: true
-            Layout.preferredHeight: 150
+            Layout.preferredHeight: 300
         }
     }
 }

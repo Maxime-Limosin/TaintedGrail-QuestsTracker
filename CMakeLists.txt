@@ -25,6 +25,7 @@ qt_add_qml_module(appTaintedGrail-QuestsTracker
         SOURCES
             src/model/questmodel.h src/model/questmodel.cpp
             src/model/quest.h
+            SOURCES src/model/subtask.h
 )
 
 target_include_directories(appTaintedGrail-QuestsTracker

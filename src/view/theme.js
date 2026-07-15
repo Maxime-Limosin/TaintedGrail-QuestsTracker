@@ -7,3 +7,4 @@ const transparent = "transparent"
 
 // Basic colors
 const white = "#ffffff"
+const lightGrey = "#e8e8e8"
