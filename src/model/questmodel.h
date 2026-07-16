@@ -37,5 +37,7 @@ public:
 
 private:
     QList<Quest> _quests;
+
+    void printQuests();
 };
 

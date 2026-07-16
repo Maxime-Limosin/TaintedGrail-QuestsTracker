@@ -131,34 +131,29 @@ void QuestModel::addQuest(const QString &title, const QString &description, QCol
 
 bool QuestModel::addSubTask(quint16 questId, const QString &taskDesc)
 {
-    Quest quest;
-    bool questFound = false;
+    int row = -1;
 
-    if(questId >= _quests.count())
-        return false;
+    // Find quest row
+    for(int i = 0; i < _quests.count(); i++)
+        if(_quests.at(i).id == questId)
+            row = i;
 
-    // Find Quest
-    foreach(const Quest &q, _quests)
-        if(q.id == questId)
-        {
-            quest = q;
-            questFound = true;
-        }
-
-    if(!questFound)
+    if(row == -1)
         return false;
 
     // Create and add SubTask
+    Quest &quest = _quests[row];
+
     SubTask task = {
         (quint8) quest.subtasks.count(),
         false,
-        ""
+        taskDesc
     };
 
     quest.subtasks.append(task);
 
     // Refresh UI
-    QModelIndex idx = index(questId);
+    QModelIndex idx = index(row);
     emit dataChanged(idx, idx, {SubTasksRole});
     return true;
 }
@@ -170,4 +165,21 @@ bool QuestModel::toggleCompleted(int row)
 
     QModelIndex idx = index(row);
     return setData(idx, !_quests.at(row).finished, FinishedRole);
+}
+
+void QuestModel::printQuests()
+{
+    foreach(const Quest &q, _quests)
+    {
+        qDebug() << "Id:" << q.id;
+        qDebug() << "finished:" << q.finished;
+        qDebug() << "title:" << q.title;
+        qDebug() << "desc:" << q.description;
+
+        qDebug() << "tasks:";
+        foreach(const SubTask &t, q.subtasks)
+            qDebug() << " " << t.id << t.completed << t.task;
+
+        qDebug() << "";
+    }
 }
