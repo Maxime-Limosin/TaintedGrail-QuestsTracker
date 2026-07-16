@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 
 import "element"
 import "theme.js" as Theme
@@ -24,14 +25,17 @@ ColumnLayout {
     ListView {
         id: listView
         model: QuestModel
+        spacing: 15
 
         Layout.fillHeight: true
         Layout.fillWidth: true
 
         delegate: ColumnLayout {
             id: taskRoot
-
             property var subtasks: model.subtasks
+            property int questId: model.id
+
+            spacing: 5
             width: ListView.view.width
 
             RowLayout {
@@ -56,14 +60,29 @@ ColumnLayout {
                 id: questDescription
                 text: model.description
                 color: Theme.lightGrey
+                Layout.leftMargin: questColor.width
             }
 
+            // Display each subtasks in a column
             Column {
+                Layout.leftMargin: questColor.width
+
                 Repeater {
                     model: taskRoot.subtasks
 
-                    TGText {
-                        text: modelData.task
+                    RowLayout {
+
+                        CheckBox {
+                            checked: modelData.completed
+                            //onClicked: QuestModel.toggleSubtaskCompleted(questId, modelData.id)
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+
+                        TGText {
+                            text: modelData.task
+                            Layout.alignment: Qt.AlignVCenter
+                            Layout.leftMargin: -10 // Material style Checkbox has a lot a padding by default
+                        }
                     }
                 }
             }

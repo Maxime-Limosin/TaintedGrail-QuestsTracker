@@ -1,3 +1,5 @@
+import QtQuick.Controls.Material
+
 import QtQuick
 import QtQuick.Layouts
 
