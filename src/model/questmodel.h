@@ -33,11 +33,14 @@ public:
 
     Q_INVOKABLE void addQuest(const QString &title, const QString &description, QColor color = Qt::white);
     Q_INVOKABLE bool addSubTask(quint16 questId, const QString &taskDesc);
-    Q_INVOKABLE bool toggleCompleted(int row);
+    Q_INVOKABLE bool toggleFinished(int row);
+    Q_INVOKABLE bool toggleSubTaskCompleted(quint16 questId, quint8 taskId);
 
 private:
     QList<Quest> _quests;
 
     void printQuests();
+    int findQuestRowById(quint16 questId);
+    int findSubTaskRowById(const Quest &quest, quint8 taskId);
 };
 

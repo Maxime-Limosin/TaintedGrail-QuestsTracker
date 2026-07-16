@@ -74,7 +74,7 @@ ColumnLayout {
 
                         CheckBox {
                             checked: modelData.completed
-                            //onClicked: QuestModel.toggleSubtaskCompleted(questId, modelData.id)
+                            onClicked: QuestModel.toggleSubTaskCompleted(questId, modelData.id)
                             Layout.alignment: Qt.AlignVCenter
                         }
 

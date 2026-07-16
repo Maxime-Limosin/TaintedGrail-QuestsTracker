@@ -131,13 +131,7 @@ void QuestModel::addQuest(const QString &title, const QString &description, QCol
 
 bool QuestModel::addSubTask(quint16 questId, const QString &taskDesc)
 {
-    int row = -1;
-
-    // Find quest row
-    for(int i = 0; i < _quests.count(); i++)
-        if(_quests.at(i).id == questId)
-            row = i;
-
+    int row = findQuestRowById(questId);
     if(row == -1)
         return false;
 
@@ -158,13 +152,29 @@ bool QuestModel::addSubTask(quint16 questId, const QString &taskDesc)
     return true;
 }
 
-bool QuestModel::toggleCompleted(int row)
+bool QuestModel::toggleFinished(int row)
 {
     if (row < 0 || row >= _quests.count())
         return false;
 
     QModelIndex idx = index(row);
     return setData(idx, !_quests.at(row).finished, FinishedRole);
+}
+
+bool QuestModel::toggleSubTaskCompleted(quint16 questId, quint8 taskId)
+{
+    int questRow = findQuestRowById(questId);
+    if(questRow == -1)
+        return false;
+
+    Quest &quest = _quests[questRow];
+    int taskRow = findSubTaskRowById(quest, taskId);
+    if(taskRow == -1)
+        return false;
+
+    SubTask &task = quest.subtasks[taskRow];
+    task.completed = !task.completed;
+    return true;
 }
 
 void QuestModel::printQuests()
@@ -182,4 +192,36 @@ void QuestModel::printQuests()
 
         qDebug() << "";
     }
+}
+
+// Return -1 if row was not found
+int QuestModel::findQuestRowById(quint16 questId)
+{
+    int row = -1;
+
+    // Find quest row
+    for(int i = 0; i < _quests.count(); i++)
+        if(_quests.at(i).id == questId)
+        {
+            row = i;
+            break;
+        }
+
+    return row;
+}
+
+// Return -1 if row was not found
+int QuestModel::findSubTaskRowById(const Quest &quest, quint8 taskId)
+{
+    int row = -1;
+
+    // Find task row
+    for(int i = 0; i < quest.subtasks.count(); i++)
+        if(quest.subtasks.at(i).id == taskId)
+        {
+            row = i;
+            break;
+        }
+
+    return row;
 }
