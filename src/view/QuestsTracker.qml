@@ -6,17 +6,6 @@ import "element"
 import "theme.js" as Theme
 
 ColumnLayout {
-    Component.onCompleted: {
-        QuestModel.addQuest("Title 1", "Desc 1")
-        QuestModel.addQuest("Title 2", "Desc 2")
-        QuestModel.addQuest("Title 3", "Desc 3")
-
-        QuestModel.addSubTask(0, "Task 1")
-        QuestModel.addSubTask(0, "Task 2")
-
-        QuestModel.addSubTask(1, "Task 1")
-    }
-
     TGText {
         text: "Current Quests"
         font.pointSize: 18

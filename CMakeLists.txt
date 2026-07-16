@@ -26,6 +26,7 @@ qt_add_qml_module(appTaintedGrail-QuestsTracker
             src/model/questmodel.h src/model/questmodel.cpp
             src/model/quest.h
             SOURCES src/model/subtask.h
+            SOURCES src/model/savefilemanager.h src/model/savefilemanager.cpp
 )
 
 target_include_directories(appTaintedGrail-QuestsTracker

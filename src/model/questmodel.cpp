@@ -6,6 +6,7 @@
 QuestModel::QuestModel(QObject *parent)
     : QAbstractListModel{parent}
 {
+    _quests = _saveFileManager.loadQuestModel();
 }
 
 int QuestModel::rowCount(const QModelIndex &parent) const
@@ -95,6 +96,7 @@ bool QuestModel::setData(const QModelIndex &index, const QVariant &value, int ro
     if(res)
         emit dataChanged(index, index, {role});
 
+    saveQuestModel();
     return res;
 }
 
@@ -127,6 +129,8 @@ void QuestModel::addQuest(const QString &title, const QString &description, QCol
     beginInsertRows(QModelIndex(), _quests.count(), _quests.count()); // Tell QML to refresh UI
     _quests.append(quest);
     endInsertRows();
+
+    saveQuestModel();
 }
 
 bool QuestModel::addSubTask(quint16 questId, const QString &taskDesc)
@@ -149,6 +153,7 @@ bool QuestModel::addSubTask(quint16 questId, const QString &taskDesc)
     // Refresh UI
     QModelIndex idx = index(row);
     emit dataChanged(idx, idx, {SubTasksRole});
+    saveQuestModel();
     return true;
 }
 
@@ -174,24 +179,9 @@ bool QuestModel::toggleSubTaskCompleted(quint16 questId, quint8 taskId)
 
     SubTask &task = quest.subtasks[taskRow];
     task.completed = !task.completed;
+
+    saveQuestModel();
     return true;
-}
-
-void QuestModel::printQuests()
-{
-    foreach(const Quest &q, _quests)
-    {
-        qDebug() << "Id:" << q.id;
-        qDebug() << "finished:" << q.finished;
-        qDebug() << "title:" << q.title;
-        qDebug() << "desc:" << q.description;
-
-        qDebug() << "tasks:";
-        foreach(const SubTask &t, q.subtasks)
-            qDebug() << " " << t.id << t.completed << t.task;
-
-        qDebug() << "";
-    }
 }
 
 // Return -1 if row was not found
@@ -224,4 +214,27 @@ int QuestModel::findSubTaskRowById(const Quest &quest, quint8 taskId)
         }
 
     return row;
+}
+
+void QuestModel::saveQuestModel()
+{
+    _saveFileManager.saveQuestModel(_quests);
+}
+
+// For debug purposes
+void QuestModel::printQuests()
+{
+    foreach(const Quest &q, _quests)
+    {
+        qDebug() << "Id:" << q.id;
+        qDebug() << "finished:" << q.finished;
+        qDebug() << "title:" << q.title;
+        qDebug() << "desc:" << q.description;
+
+        qDebug() << "tasks:";
+        foreach(const SubTask &t, q.subtasks)
+            qDebug() << " " << t.id << t.completed << t.task;
+
+        qDebug() << "";
+    }
 }

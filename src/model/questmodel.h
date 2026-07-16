@@ -4,7 +4,9 @@
 #include <QList>
 #include <QQmlEngine>
 
+
 #include "quest.h"
+#include "savefilemanager.h"
 
 class QuestModel : public QAbstractListModel
 {
@@ -38,9 +40,12 @@ public:
 
 private:
     QList<Quest> _quests;
+    SaveFileManager _saveFileManager;
 
-    void printQuests();
     int findQuestRowById(quint16 questId);
     int findSubTaskRowById(const Quest &quest, quint8 taskId);
+
+    void saveQuestModel();
+    void printQuests();
 };
 
