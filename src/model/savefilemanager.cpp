@@ -69,7 +69,7 @@ QJsonObject SaveFileManager::questToJson(const Quest &q)
     QJsonObject jsonObject;
     jsonObject["id"] = q.id;
     jsonObject["finished"] = q.finished;
-    jsonObject["titl"] = q.title;
+    jsonObject["title"] = q.title;
     jsonObject["description"] = q.description;
 
     QJsonObject colorObject;
