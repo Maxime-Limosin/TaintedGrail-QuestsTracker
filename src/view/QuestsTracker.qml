@@ -74,6 +74,21 @@ ColumnLayout {
                         }
                     }
                 }
+
+                TextField {
+                    Layout.fillWidth: true
+                    placeholderText: "Add a task..."
+                    font.pointSize: 12
+
+                    // Submit on Enter
+                    onAccepted: {
+                        if (text.trim().length <= 0)
+                            return
+
+                        QuestModel.addSubTask(questId, text.trim())
+                        text = ""
+                    }
+                }
             }
         }
     }
